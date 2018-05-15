@@ -33,6 +33,8 @@ git clone https://github.com/mgwilliams/python3-pjsip.git
 cd python3-pjsip
 sudo python3 setup.py install
 
+cd ~/
+
 # Build cgcall
 git clone https://github.com/philipptrenz/cgcall.git
 cd cgcall

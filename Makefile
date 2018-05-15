@@ -1,6 +1,6 @@
 all: cgcall
 	
-sipserv: cgcall.c
+cgcall: cgcall.c
 	cc -o $@ $< `pkg-config --cflags --libs libpjproject`
 	
 clean:
