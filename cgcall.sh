@@ -1,13 +1,13 @@
 #!/bin/bash
 #
 #=================================================================================
-# Name        : sipcall-sample.sh
+# Name        : cgcall.sh
 # Version     : 0.1
 #
 # Copyright (C) 2012 by Andre Wussow, 2012, desk@binerry.de
 #
 # Description :
-#     Sample Script for checking average load and making call with sipcall.
+#     Sample Script for controlling cgcall.
 #
 # Dependencies:
 #	- sipcall
@@ -27,23 +27,18 @@
 #Lesser General Public License for more details.
 #================================================================================
 
-# define sip-settings
-sip_domain="fritz.box";
-sip_user="620";
-sip_password="password";
-play_file="play.wav";
+# define config-file
+serv_cfg="cgcall.cfg";
 
-# define number to call
-phone_number="**1";
+if [ $1 = "start" ]; then 
+	# start cgcall in background
+	$(./cgcall -s 1 --config-file $serv_cfg > /dev/null &);
+	echo "cgcall started.";
+fi
 
-# read actual load values
-avgload1="$(uptime |awk -F'average: ' '{print $2}' |awk -F', ' '{print $1}')";
-avgload5="$(uptime |awk -F'average: ' '{print $2}' |awk -F', ' '{print $2}')";
-avgload15="$(uptime |awk -F'average: ' '{print $2}' |awk -F', ' '{print $3}')";
-
-# creating text to speak
-tts="$(echo This is raspberry pi and the load is high. The average load within the last 5 minutes was $avgload5)";
-
-# make call with sipcall
-$(./sipcall -sd $sip_domain -su $sip_user -sp $sip_password -pn $phone_number -s 1 -mr 2 -tts "$tts" -ttsf $play_file > /dev/null);
-
+if [ $1 = "stop" ]; then 
+	# stop cgcall 
+	pid="$(ps aux | awk '/[s]ipserv/ {print $2}' | head -1)";
+	$(kill $pid  > /dev/null);
+	echo "cgcall stopped.";
+fi

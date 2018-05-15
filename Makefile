@@ -1,11 +1,7 @@
-all: sipcall sipserv
-
-sipcall: sipcall.c
-	cc -o $@ $< `pkg-config --cflags --libs libpjproject`
+all: cgcall
 	
-sipserv: sipserv.c
+sipserv: cgcall.c
 	cc -o $@ $< `pkg-config --cflags --libs libpjproject`
 	
 clean:
-	rm -rf sipcall
-	rm -rf sipserv
+	rm -rf cgcall

@@ -1,6 +1,6 @@
 /*
 =================================================================================
- Name        : sipserv.c
+ Name        : cgcall.c
  Version     : 0.1
 
  Copyright (C) 2012 by Andre Wussow, desk@binerry.de
@@ -54,7 +54,7 @@ Lesser General Public License for more details.
 #define ESPEAK_PITCH 75
 
 // disable pjsua logging
-#define PJSUA_LOG_LEVEL 0
+#define PJSUA_LOG_LEVEL 2
 
 // define max supported dtmf settings
 #define MAX_DTMF_SETTINGS 9
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
 
 	if (!app_cfg.sip_domain || !app_cfg.sip_user || !app_cfg.sip_password || !app_cfg.language)
 	{
-		log_message("Not enough stuff in config file\nsee sipserv -h\n");
+		log_message("Not enough stuff in config file\nsee cgcall -h\n");
 		// display usage info and exit app
 		usage(2); // fixme does not show after file has been opened.
 		exit(1);
@@ -262,6 +262,8 @@ int main(int argc, char *argv[])
 	
 	// create account and register to sip server
 	register_sip();
+
+	log_message("All done, waiting for call events ...\n");
 	
 	// app loop
 	for (;;) {
@@ -289,7 +291,7 @@ static void usage(int error)
 		puts  ("");
 	}
 	puts  ("Usage:");
-    puts  ("  sipserv [options]");
+    puts  ("  cgcall [options]");
     puts  ("");
 	puts  ("Commandline:");
     puts  ("Mandatory options:");
@@ -551,7 +553,7 @@ static void setup_sip(void)
 {
 	pj_status_t status;
 	
-	log_message("Setting up pjsua ... ");
+	log_message("Setting up pjsua ... \n");
 	
 	// create pjsua  
 	status = pjsua_create();
@@ -562,7 +564,7 @@ static void setup_sip(void)
 	pjsua_config_default(&cfg);
 	
 	// enable just 1 simultaneous call 
-	cfg.max_calls = 1;
+	cfg.max_calls = 1;  // default: 1
 	
 	// callback configuration	
 	cfg.cb.on_incoming_call = &on_incoming_call;
@@ -603,7 +605,7 @@ static void setup_sip(void)
 	status = pjsua_set_null_snd_dev();
 	if (status != PJ_SUCCESS) error_exit("Error disabling audio", status);
 	
-	log_message("Done.\n");
+	log_message("Setting up pjsua: Done.\n");
 }
 
 // helper for creating and registering sip-account
