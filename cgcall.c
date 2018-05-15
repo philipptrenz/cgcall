@@ -119,7 +119,7 @@ static int callBash(char* command, char* result);
 static void on_incoming_call(pjsua_acc_id, pjsua_call_id, pjsip_rx_data *);
 static void on_call_media_state(pjsua_call_id);
 static void on_call_state(pjsua_call_id, pjsip_event *);
-static void on_media_finished(pjmedia_port *, void *);
+//static void on_media_finished(pjmedia_port *, void *);
 static void on_dtmf_digit(pjsua_call_id, int);
 static void signal_handler(int);
 static char *trim_string(char *);
@@ -666,10 +666,12 @@ static void create_player(pjsua_call_id call_id, char *file)
     status = pjsua_player_get_port(play_id, &play_port);
 	if (status != PJ_SUCCESS) error_exit("Error getting sound player port", status);	
 
+	/*
 	// register media finished callback	
     status = pjmedia_wav_player_set_eof_cb(&play_port, NULL, &on_media_finished);
 	if (status != PJ_SUCCESS) error_exit("Error adding sound-playback callback", status);
-	
+	*/
+
 	log_message("Done.\n");
 }
 
@@ -1076,6 +1078,7 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 	*/
 }
 
+/*
 // handler for media-finished-events
 static void on_media_finished(pjmedia_port *play_port, void *user_data)
 {
@@ -1084,6 +1087,7 @@ static void on_media_finished(pjmedia_port *play_port, void *user_data)
 	
 	log_message("Media file finished.");
 }
+*/
 
 // handler for "break-in-key"-events (e.g. ctrl+c)
 static void signal_handler(int signal) 
