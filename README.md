@@ -82,6 +82,8 @@ make
 * cmd=string  _command to check if the call should be taken; the wildcard # will be replaced with the calling phone number; should return a "1" as first char, if you want to take the call._
 * am=string   _aftermath: command to be executed after call ends. Will be called with two parameters: $1 = Phone number $2 = recorded file name_
 
+Hint: Audio files can be converted via `ffmpeg -i input.wav -ac 1 -ar 22000 -acodec pcm_s16le output.wav`
+
 ## a sample configuration can be found in cgcall-sample.cfg
   
 ## sipserv can be controlled with 

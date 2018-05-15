@@ -924,6 +924,28 @@ static void on_call_media_state(pjsua_call_id call_id)
 			create_player(call_id, tts_file);
 		}
 
+		// play "latest.wav" record
+
+		FILE *file;
+		if ((file = fopen("latest.wav", "r")) == NULL)
+		{
+			if (errno == ENOENT)
+			{
+				log_message("latest.wav file doesn't exist\n");
+			}
+			else
+			{
+				// Check for other errors too, like EACCES and EISDIR
+				log_message("latest.wav file: some other error occured\n");
+			}
+			exit(1);
+		}
+		else
+		{
+			fclose(file);
+			create_player(call_id, "latest.wav");
+		}
+
 		// create and start call recorder
 		if (app_cfg.record_calls)
 		{
@@ -988,6 +1010,7 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 // handler for dtmf-events
 static void on_dtmf_digit(pjsua_call_id call_id, int digit) 
 {
+	/*
 	// get call infos
 	pjsua_call_info ci; 
 	pjsua_call_get_info(call_id, &ci);
@@ -1044,6 +1067,7 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 	{
 		log_message("DTMF command dropped - state is actual processing.\n");
 	}
+	*/
 }
 
 // handler for "break-in-key"-events (e.g. ctrl+c)
