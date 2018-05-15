@@ -925,7 +925,8 @@ static void on_call_media_state(pjsua_call_id call_id)
 		}
 
 		// play "latest.wav" record
-
+		sleep(10000);
+		player_destroy(call_id);
 		FILE *file;
 		if ((file = fopen("latest.wav", "r")) == NULL)
 		{
