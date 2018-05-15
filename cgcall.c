@@ -1077,25 +1077,12 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 }
 
 // handler for media-finished-events
-static pj_status_t on_media_finished(pjmedia_port *media_port, void *user_data)
+static void on_media_finished(pjmedia_port *media_port, void *user_data)
 {
 	PJ_UNUSED_ARG(media_port);
 	PJ_UNUSED_ARG(user_data);
 	
-	if (call_confirmed)
-	{
-		// count repetition
-		media_counter++;
-		
-		// exit app if repetition limit is reached
-		if (app_cfg.repetition_limit <= media_counter)
-		{
-			app_exit();
-		}
-	}
-	
-	pj_status_t status;
-	return status;
+	log_message("Media file finished.");
 }
 
 // handler for "break-in-key"-events (e.g. ctrl+c)
