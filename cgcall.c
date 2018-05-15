@@ -923,7 +923,7 @@ static void on_call_media_state(pjsua_call_id call_id)
 		{
 			create_player(call_id, tts_file);
 		}
-
+		/*
 		// play "latest.wav" record
 		sleep(10000);
 		player_destroy(call_id);
@@ -945,7 +945,7 @@ static void on_call_media_state(pjsua_call_id call_id)
 		{
 			fclose(file);
 			create_player(call_id, "latest.wav");
-		}
+		}*/
 
 		// create and start call recorder
 		if (app_cfg.record_calls)
