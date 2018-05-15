@@ -1,14 +1,14 @@
 # cgcall – A SIP audio player for event records
 
-This software 
-
 
 Dependencies:
 - PJSUA API (http://www.pjsip.org)
 - eSpeak (http://espeak.sourceforge.net)
 
 Forked from: https://github.com/fabianhu/SIP-Pi
+
 Copyright (C) 2012 by _Andre Wussow_, desk@binerry.de
+
 Major changes 2017 by _Fabian Huslik, github.com/fabianhu_
 
 
@@ -73,7 +73,7 @@ make
 * dtmf.X.cmd=string           _Set shell command._   
 
 ### Optional options
-  
+
 * rc=int      _Record call (0=no/1=yes)_   
 * af=string   _announcement wav file to play; tts will not be read, if this parameter is given. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz;_ 
 * cmd=string  _command to check if the call should be taken; the wildcard # will be replaced with the calling phone number; should return a "1" as first char, if you want to take the call._
