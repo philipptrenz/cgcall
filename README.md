@@ -1,4 +1,4 @@
-# cgcall – A SIP audio player for event records
+# cgcall – A SIP audio player for audio records
 
 This software provides a "softphone", a Voice over IP software client, to provide a audio player for WAV-files via telephony, running on a Raspberry Pi.
 

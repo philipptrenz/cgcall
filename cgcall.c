@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 	app_cfg.silent_mode = 0; 
 
 	// print infos
-	log_message("SIP Call - Simple TTS/DTMF-based answering machine\n");
+	log_message("\ncgcall - A SIP audio player for audio records\n");
 	log_message("==================================================\n");
 		
 	// register signal handler for break-in-keys (e.g. ctrl+c)
@@ -214,12 +214,12 @@ int main(int argc, char *argv[])
 		{
 			if (errno == ENOENT)
 			{
-				log_message("Announcement file doesn't exist");
+				log_message("Announcement file doesn't exist\n");
 			}
 			else
 			{
 				// Check for other errors too, like EACCES and EISDIR
-				log_message("Announcement file: some other error occured");
+				log_message("Announcement file: some other error occured\n");
 			}
 			exit(1);
 		}
@@ -262,8 +262,6 @@ int main(int argc, char *argv[])
 	
 	// create account and register to sip server
 	register_sip();
-
-	log_message("All done, waiting for call events ...\n");
 	
 	// app loop
 	for (;;) {
