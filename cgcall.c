@@ -119,7 +119,7 @@ static int callBash(char* command, char* result);
 static void on_incoming_call(pjsua_acc_id, pjsua_call_id, pjsip_rx_data *);
 static void on_call_media_state(pjsua_call_id);
 static void on_call_state(pjsua_call_id, pjsip_event *);
-static void on_media_finished(pjmedia_port, void *);
+static void on_media_finished(pjmedia_port *, void *);
 static void on_dtmf_digit(pjsua_call_id, int);
 static void signal_handler(int);
 static char *trim_string(char *);
@@ -1077,9 +1077,9 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 }
 
 // handler for media-finished-events
-static void on_media_finished(pjmedia_port *media_port, void *user_data)
+static void on_media_finished(pjmedia_port *play_port, void *user_data)
 {
-	PJ_UNUSED_ARG(media_port);
+	PJ_UNUSED_ARG(play_port);
 	PJ_UNUSED_ARG(user_data);
 	
 	log_message("Media file finished.");
