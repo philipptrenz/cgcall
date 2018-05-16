@@ -38,6 +38,8 @@ Lesser General Public License for more details.
 #define PJ_IS_BIG_ENDIAN 0
 
 // includes
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
@@ -46,6 +48,7 @@ Lesser General Public License for more details.
 #include <time.h>
 #include <errno.h>
 #include <pjsua-lib/pjsua.h>
+
 
 // some espeak options
 #define ESPEAK_AMPLITUDE 100
@@ -130,6 +133,7 @@ static void error_exit(const char *, pj_status_t);
 
 // header of internal functions
 static void play_latest_record();
+static void log_caller(pjsua_call_info, char *);
 
 // check if announcement got played
 int announcement_played = 0;
@@ -813,6 +817,79 @@ static void FileNameFromCallInfo(char* filename, char* sipNr, pjsua_call_info ci
 	stringRemoveChars(filename, "\":\\/*?|<>$%&'`{}[]()@");
 }
 
+
+
+static void log_caller(pjsua_call_info ci, char* event_note) {
+
+	char info[256] ;
+	// log call info
+	char sipTxt[100] = "";
+	char sipNr[100] = "";
+
+	char tmp[100];
+	char* ptr;
+	strcpy(tmp, ci.remote_info.ptr);
+
+	// get elements
+	extractdelimited(sipTxt, tmp, '<', '>');
+
+	// extract phone number
+	if (strncmp(sipTxt, "sip:", 4) == 0) {
+		int i = strcspn(sipTxt, "@") - 4;
+		strncpy(sipNr, &sipTxt[4], i);
+		sipNr[i] = '\0';
+	} else {
+		//sprintf(tmp,"SIP invalid");
+		sprintf(tmp, "SIP does not start with sip:<%s>\n", sipTxt);
+		log_message(tmp);
+	}
+
+	char timestamp[20];
+	getTimestamp(timestamp);
+
+	// build log line
+	char log_line[256];
+	strcpy(log_line, timestamp);
+	strcat(log_line, "\t");
+	strcat(log_line, sipNr);
+	strcat(log_line, "\t");
+	strcat(log_line, event_note);
+	strcat(log_line, "\n");
+
+	// get log filename
+	char log_filename[256]; 
+	strcpy(log_filename, "log/");
+	char tmp2[4];
+	memcpy(tmp2, timestamp + 0 /* Offset */, 4 /* Length */);
+	tmp2[4] = 0; /* Add terminator */
+	strcat(log_filename, tmp2);
+	memcpy(tmp2, timestamp + 5 /* Offset */, 2 /* Length */);
+	tmp2[2] = 0; /* Add terminator */
+	strcat(log_filename, tmp2);
+	strcat(log_filename, "_log.txt");
+
+	// create log directory if not exist
+	struct stat st = {0};
+	if (stat("log", &st) == -1) {
+	    mkdir("log", 0700);
+	}
+
+	// write to log file
+	FILE *log = fopen(log_filename, "at");
+    if (!log) log = fopen(log_filename, "wt");	// create if not exist
+    if (!log) {
+    	sprintf(info, "log_caller: can not open %s for writing.\n", log_filename);
+        log_message(info);
+        return;   // bail out if we can't log
+    }
+
+    fprintf(log, log_line);
+
+    fclose(log);
+
+    log_message("Wrote log message.\n");
+}
+
 #define RESULTSIZE 20
 
 // helper for calling BASH
@@ -960,6 +1037,8 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 	{
 		log_message("Call confirmed.\n");
 
+		log_caller(ci, "connected");
+
 		// ensure that message is played from start
 		if (play_id != PJSUA_INVALID_ID)
 		{
@@ -991,6 +1070,8 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 				callBash(command, result);
 			}
 		}
+
+		log_caller(ci, "disconnected");
 	}
 }
 
