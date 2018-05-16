@@ -120,6 +120,9 @@ if __name__ == "__main__":
 	new_available = False
 	start_time = time.time()
 
+	# initial lookup
+	new_available, latest = is_new_recording_available(config)
+
 	while(True):
 
 		# check if there is a new recording available and 
