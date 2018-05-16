@@ -1188,7 +1188,7 @@ static void play_latest_record()
 			// Check for other errors too, like EACCES and EISDIR
 			log_message("audio/latest.wav file: some other error occured\n");
 		}
-		exit(1);
+		error_exit("Error with audio file audio/latest.wav", status);
 	}
 	else
 	{
@@ -1226,6 +1226,8 @@ static void app_exit()
 
 		log_message("Done.\n");
 
+		remove(".activecall");
+
 		exit(0);
 	}
 }
@@ -1247,6 +1249,8 @@ static void error_exit(const char *title, pj_status_t status)
 		// hangup open calls and stop pjsua
 		pjsua_call_hangup_all();
 		pjsua_destroy();
+
+		remove(".activecall");
 
 		exit(1);
 	}
