@@ -1039,6 +1039,10 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 
 		log_caller(ci, "connected");
 
+		// write .activecall file
+		FILE *file = fopen(".activecall", "wt");
+		fclose(file);
+
 		// ensure that message is played from start
 		if (play_id != PJSUA_INVALID_ID)
 		{
@@ -1072,6 +1076,8 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 		}
 
 		log_caller(ci, "disconnected");
+
+		remove(".activecall");
 	}
 }
 

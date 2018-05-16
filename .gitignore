@@ -2,3 +2,6 @@ cgcall
 *.wav
 .DS_Store
 .idea
+*.c.swp
+.latest
+cgcall.cfg
