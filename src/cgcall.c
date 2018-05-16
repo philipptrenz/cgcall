@@ -1188,7 +1188,7 @@ static void play_latest_record()
 			// Check for other errors too, like EACCES and EISDIR
 			log_message("audio/latest.wav file: some other error occured\n");
 		}
-		error_exit("Error with audio file audio/latest.wav", status);
+		error_exit("Error with audio file audio/latest.wav", 1);
 	}
 	else
 	{
