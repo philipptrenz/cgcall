@@ -5,3 +5,4 @@ cgcall
 *.c.swp
 .latest
 cgcall.cfg
+log/
