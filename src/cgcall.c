@@ -145,11 +145,6 @@ int main(int argc, char *argv[])
 	app_cfg.record_calls = 0;
 	app_cfg.silent_mode = 0;
 
-	// print infos
-	log_message("\n");
-	log_message("cgcall - A SIP audio player for audio records\n");
-	log_message("=============================================\n");
-
 	// register signal handler for break-in-keys (e.g. ctrl+c)
 	signal(SIGINT, signal_handler);
 	signal(SIGKILL, signal_handler);
@@ -198,6 +193,11 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+
+	// print infos
+	log_message("\n");
+	log_message("cgcall - A SIP audio player for audio records\n");
+	log_message("=============================================\n");
 
 	if (!app_cfg.log_file)
 	{
@@ -456,6 +456,11 @@ static void parse_config_file(char *cfg_file)
 			if (!strcasecmp(arg, "tts"))
 			{
 				app_cfg.tts = arg_val;
+				continue;
+			}
+
+			if (strcasecmp(arg, "fd") || strcasecmp(arg, "fu") || strcasecmp(arg, "fp") || strcasecmp(arg, "ff") )
+			{
 				continue;
 			}
 

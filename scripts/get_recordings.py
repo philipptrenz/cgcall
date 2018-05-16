@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, subprocess, time
+import sys, os, subprocess, time
 from ftplib import FTP
 
 ffmpeg_cmd = 'ffmpeg -i audio/latest.mp3 -ac 1 -ar 22000 -acodec pcm_s16le -y audio/latest_new.wav'
@@ -15,7 +15,7 @@ def read_config():
 	ftp_server =	""
 	ftp_check_frequency = 	30
 
-	with open('cgcall.cfg', 'r') as f:
+	with open(sys.argv[1], 'r') as f:
 		for line in f:
 			line = line.rstrip()  # remove '\n' at end of line
 				
@@ -106,7 +106,7 @@ def get_latest(config, latest):
 
 if __name__ == "__main__":
 
-	print("read config ...")
+	print("read config", sys.argv[1], "...")
 
 	config = read_config()
 

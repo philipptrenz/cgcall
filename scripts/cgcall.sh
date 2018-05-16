@@ -10,10 +10,11 @@
 #     Sample Script for controlling cgcall.
 #
 # Dependencies:
-#	- sipcall
+#	- pjsip
+# 	- espeak
 # 
-# References  :
-# http://binerry.de/post/29180946733/raspberry-pi-caller-and-answering-machine
+# References:
+# https://github.com/philipptrenz/cgcall
 # 
 #================================================================================
 #This script is free software; you can redistribute it and/or
@@ -27,18 +28,41 @@
 #Lesser General Public License for more details.
 #================================================================================
 
-# define config-file
-serv_cfg="cgcall.cfg";
+DIR="/home/pi/cgcall"
+CONFIG="$DIR/cgcall.cfg"
 
-if [ $1 = "start" ]; then 
-	# start cgcall in background
-	$(./cgcall -s 1 --config-file $serv_cfg > /dev/null &);
-	echo "cgcall started.";
-fi
+NAME1=cgcall
+PIDFILE1=/var/run/$NAME1.pid
+DAEMON1=$DIR/cgcall
+DAEMON_OPTS1="-s 1 --config-file $CONFIG"
 
-if [ $1 = "stop" ]; then 
-	# stop cgcall 
-	pid="$(ps aux | awk '/[s]ipserv/ {print $2}' | head -1)";
-	$(kill $pid  > /dev/null);
-	echo "cgcall stopped.";
-fi
+NAME2=cgcall_py
+PIDFILE2=/var/run/$NAME2.pid
+DAEMON2=/usr/bin/python3
+DAEMON_OPTS2="$DIR/scripts/get_recordings.py $CONFIG"
+
+
+export PATH="${PATH:+$PATH:}/usr/sbin:/sbin:/home/pi/cgcall:"
+
+case "$1" in
+  start)
+    echo "Starting daemon: "$NAME1
+	start-stop-daemon --start --chdir $DIR --background --pidfile $PIDFILE1 --make-pidfile --exec $DAEMON1 -- $DAEMON_OPTS1
+	echo "Starting daemon: "$NAME2
+	start-stop-daemon --start --chdir $DIR --background --pidfile $PIDFILE2 --make-pidfile --exec $DAEMON2 -- $DAEMON_OPTS2
+    echo "."
+	;;
+  stop)
+    echo "Stopping daemon: "$NAME1
+	start-stop-daemon --stop --pidfile $PIDFILE1 --remove-pidfile
+	echo "Stopping daemon: "$NAME2
+	start-stop-daemon --stop --pidfile $PIDFILE2 --remove-pidfile
+    echo "."
+	;;
+
+  *)
+	echo "Usage: "$1" {start|stop}"
+	exit 1
+esac
+
+exit 0
