@@ -66,6 +66,7 @@ def is_new_recording_available(config):
 						get_latest(config, latest)
 						return True
 					else:
+						print('Everything up to date')
 						return False
 	except:
 		print("Accessing ftp failed, trying again in normal interval")
