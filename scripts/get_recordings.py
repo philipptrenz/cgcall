@@ -55,19 +55,21 @@ def is_new_recording_available(config):
 
 				with open('.latest', 'a') as f:
 					f.write(latest)
-				return True, latest
+				get_latest(config, latest)
+				return True
 				
 			else:
 
 				with open('.latest') as f:
 					first_line = f.readline()
 					if (latest[:10] != first_line[:10]):
-						return True, latest
+						get_latest(config, latest)
+						return True
 					else:
-						return False, None
+						return False
 	except:
 		print("Accessing ftp failed, trying again in normal interval")
-		return False, None
+		return False
 
 
 
@@ -91,12 +93,6 @@ def get_latest(config, latest):
 				os.remove("audio/latest.mp3")
 
 				print("converted")
-
-				# TODO: check if there is a ongoing call
-
-				if os.path.exists("audio/latest.wav"):
-					os.remove("audio/latest.wav")
-				os.rename("audio/latest_new.wav", "audio/latest.wav")
 				
 				print("done.")
 				return True
@@ -117,27 +113,31 @@ if __name__ == "__main__":
 	print("running ...")
 
 	latest = ""
-	new_available = False
+	new_ready = False
 	start_time = time.time()
 
 	# initial lookup
-	new_available, latest = is_new_recording_available(config)
+	new_ready = is_new_recording_available(config)
 
 	while(True):
 
-		# check if there is a new recording available and 
-		# if there is not currently a ongoing call
-		if (new_available and not os.path.exists('.activecall')):
+		# check if there is a new recording already 
+		# downloaded and no currently ongoing call
+		if (new_ready and not os.path.exists('.activecall')):
 
-			res = get_latest(config, latest)
-			if (res): 
-				new_available = False
-				start_time = time.time() # reset
+			if os.path.exists("audio/latest.wav"):
+				os.remove("audio/latest.wav")
+			os.rename("audio/latest_new.wav", "audio/latest.wav")
+
+			print('New recording got copied and is now available')
+			
+			new_ready = False
+			start_time = time.time() # reset
 
 		# check for new recording in intercal
 		elif (time.time() - start_time > config['frequency'] * 60):
 
-			new_available, latest = is_new_recording_available(config)
+			new_ready = is_new_recording_available(config)
 			start_time = time.time() # reset
 
 		else:
