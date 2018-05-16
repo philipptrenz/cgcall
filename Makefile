@@ -1,6 +1,6 @@
 all: cgcall
 	
-cgcall: cgcall.c
+cgcall: src/cgcall.c
 	cc -o $@ $< `pkg-config --cflags --libs libpjproject`
 	
 clean:
