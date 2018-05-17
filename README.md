@@ -87,6 +87,6 @@ Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -aco
 ## Start/Stop script
 
 ```bash
-./cgcall.sh start
-./cgcall.sh stop
+sudo ./scripts/cgcall.sh start
+sudo ./scripts/cgcall.sh stop
 ```
