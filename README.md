@@ -88,3 +88,10 @@ Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -aco
 sudo ./scripts/cgcall.sh start
 sudo ./scripts/cgcall.sh stop
 ```
+
+## Start cgcall on boot
+
+```bash
+sudo cp scripts/cgcall.sh /etc/init.d/cgcall
+sudo update-rc.d cgcall defaults 
+```
