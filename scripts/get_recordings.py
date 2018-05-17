@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, os, subprocess, time
+import sys, os, subprocess, time, datetime
 from ftplib import FTP
 
 ffmpeg_cmd = 'ffmpeg -i audio/latest.mp3 -ac 1 -ar 22000 -acodec pcm_s16le -y audio/latest_new.wav'
@@ -33,7 +33,7 @@ def read_config():
 	return config
 
 def is_new_recording_available(config):
-	print("checking for new recording ...")
+	print(datetime.datetime.now(), "Checking for new recording ...")
 
 	try:
 		latest = ""
@@ -65,17 +65,16 @@ def is_new_recording_available(config):
 						get_latest(config, latest)
 						return True
 					else:
-						print('Everything up to date')
 						return False
 	except:
-		print("Accessing ftp failed, trying again in normal interval")
+		print(datetime.datetime.now(), "Accessing ftp failed, trying again in normal interval")
 		return False
 
 
 
 def get_latest(config, latest):
 
-	print("loading latest recording via ftp ...")
+	print(datetime.datetime.now(), "Loading latest recording via ftp ...")
 
 	try:
 		with FTP(config['server']) as ftp:
@@ -83,7 +82,7 @@ def get_latest(config, latest):
 
 			ftp.retrbinary('RETR '+latest, open('audio/latest.mp3', 'wb').write)
 
-			print("received")
+			print(datetime.datetime.now(), "Received new audio file as mp3")
 
 			ffmpeg_cmd_arr = ffmpeg_cmd.split(" ")
 			res = subprocess.call(ffmpeg_cmd, shell=True)
@@ -92,24 +91,23 @@ def get_latest(config, latest):
 
 				os.remove("audio/latest.mp3")
 
-				print("converted")
+				print(datetime.datetime.now(), "Converted mp3 to wav")
 
-				print("done.")
 				return True
 
 			else:
-				print('ffmpeg conversion failed!')
+				print(datetime.datetime.now(), 'ffmpeg conversion failed!')
 				return False
 	except:
 		raise
 
 if __name__ == "__main__":
 
-	print("read config", sys.argv[1], "...")
+	print(datetime.datetime.now(), "Read config", sys.argv[1], "...")
 
 	config = read_config()
 
-	print("running ...")
+	print(datetime.datetime.now(), "Service running ...")
 
 	latest = ""
 	new_ready = False
@@ -128,7 +126,7 @@ if __name__ == "__main__":
 				os.remove("audio/latest.wav")
 			os.rename("audio/latest_new.wav", "audio/latest.wav")
 
-			print('New recording got copied and is now available')
+			print(datetime.datetime.now(), 'New recording got copied and is now available')
 
 			new_ready = False
 			start_time = time.time() # reset
