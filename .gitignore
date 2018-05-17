@@ -4,5 +4,6 @@ cgcall
 .idea
 *.c.swp
 .latest
+.activecall
 cgcall.cfg
 log/
