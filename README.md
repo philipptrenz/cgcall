@@ -82,7 +82,7 @@ Optional:
 
 Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -acodec pcm_s16le output.wav`
 
-## a sample configuration can be found in cgcall-sample.cfg
+**A sample configuration can be found in cgcall-sample.cfg**
   
 ## Start/Stop script
 
