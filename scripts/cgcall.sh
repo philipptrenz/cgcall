@@ -47,9 +47,9 @@ export PATH="${PATH:+$PATH:}/usr/sbin:/sbin:/home/pi/cgcall:"
 case "$1" in
   start)
     echo "Starting daemon: "$NAME1
-	start-stop-daemon --start --chuid pi:pi --make-pidfile --pidfile $PIDFILE1 --chdir $DIR --startas /bin/bash -- -c "exec $DAEMON1 $DAEMON_OPTS1 > /var/log/$NAME1.log 2>&1"
+	start-stop-daemon --start --make-pidfile --pidfile $PIDFILE1 --chdir $DIR --chuid pi:pi --startas /bin/bash -- -c "exec $DAEMON1 $DAEMON_OPTS1 > /var/log/$NAME1.log 2>&1"
 	echo "Starting daemon: "$NAME2
-	start-stop-daemon --start --chuid pi:pi --make-pidfile --pidfile $PIDFILE2 --chdir $DIR --startas /bin/bash -- -c "exec $DAEMON2 $DAEMON_OPTS2 > /var/log/$NAME2.log 2>&1"
+	start-stop-daemon --start --make-pidfile --pidfile $PIDFILE2 --chdir $DIR --chuid pi:pi --startas /bin/bash -- -c "exec $DAEMON2 $DAEMON_OPTS2 > /var/log/$NAME2.log 2>&1"
     echo "."
 	;;
   stop)
