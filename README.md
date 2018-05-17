@@ -17,7 +17,7 @@ Major changes 2017 by _Fabian Huslik, github.com/fabianhu_
 
 ```bash
 # Install dependencies
-sudo apt install autoconf checkinstall libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev yasm zlib1g-dev libsdl-sound1.2-dev libportaudio-dev espeak espeak-data git python3 python3-pip
+sudo apt install autoconf checkinstall libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev yasm zlib1g-dev libsdl-sound1.2-dev libportaudio-dev espeak espeak-data git python3 python3-pip ffmpeg
 
 # Install pjsip
 wget http://www.pjsip.org/release/2.7.2/pjproject-2.7.2.tar.bz2
@@ -26,12 +26,6 @@ cd pjproject-2.7.2/
 ./configure --disable-video --disable-libwebrtc
 make dep && make clean && make
 sudo make install
-
-# Optional: Install pjsip python3 bindings
-cd pjsip-apps/src
-git clone https://github.com/mgwilliams/python3-pjsip.git 
-cd python3-pjsip
-sudo python3 setup.py install
 
 cd ~/
 
