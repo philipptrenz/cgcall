@@ -17,7 +17,7 @@ Major changes 2017 by _Fabian Huslik, github.com/fabianhu_
 
 ```bash
 # Install dependencies
-sudo apt install autoconf checkinstall libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev yasm zlib1g-dev libsdl-sound1.2-dev libportaudio-dev
+sudo apt install autoconf checkinstall libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev yasm zlib1g-dev libsdl-sound1.2-dev libportaudio-dev espeak espeak-data
 
 # Install pjsip
 wget http://www.pjsip.org/release/2.7.2/pjproject-2.7.2.tar.bz2
