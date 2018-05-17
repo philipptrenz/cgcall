@@ -90,15 +90,3 @@ Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -aco
 ./cgcall.sh start
 ./cgcall.sh stop
 ```
-
-## License
-
-This tools are free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This tools are distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
