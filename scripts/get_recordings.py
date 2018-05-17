@@ -18,7 +18,7 @@ def read_config():
 	with open(sys.argv[1], 'r') as f:
 		for line in f:
 			line = line.rstrip()  # remove '\n' at end of line
-				
+
 			if line.startswith('fd='):
 				config['server'] = line.replace('fd=', '').replace(' ', '')
 
@@ -30,7 +30,6 @@ def read_config():
 
 			if line.startswith('ff='):
 				config['frequency'] = int(line.replace('ff=', '').replace(' ', ''))
-
 	return config
 
 def is_new_recording_available(config):
@@ -48,7 +47,7 @@ def is_new_recording_available(config):
 					files.remove(f)
 
 			files.sort(reverse=True)
-			
+
 			latest = files[0]
 
 			if not os.path.exists('.latest'):
@@ -57,12 +56,12 @@ def is_new_recording_available(config):
 					f.write(latest)
 				get_latest(config, latest)
 				return True
-				
+
 			else:
 
 				with open('.latest') as f:
 					first_line = f.readline()
-					if (latest[:10] != first_line[:10]):
+					if (latest != first_line or not os.path.exists("audio/latest.wav")):
 						get_latest(config, latest)
 						return True
 					else:
@@ -94,7 +93,7 @@ def get_latest(config, latest):
 				os.remove("audio/latest.mp3")
 
 				print("converted")
-				
+
 				print("done.")
 				return True
 
@@ -102,8 +101,7 @@ def get_latest(config, latest):
 				print('ffmpeg conversion failed!')
 				return False
 	except:
-		print("Accessing ftp failed, trying again in normal interval")
-		return False
+		raise
 
 if __name__ == "__main__":
 
@@ -131,7 +129,7 @@ if __name__ == "__main__":
 			os.rename("audio/latest_new.wav", "audio/latest.wav")
 
 			print('New recording got copied and is now available')
-			
+
 			new_ready = False
 			start_time = time.time() # reset
 
@@ -145,4 +143,4 @@ if __name__ == "__main__":
 
 			time.sleep(30) # 30 secs
 
-	
+

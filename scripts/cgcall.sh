@@ -12,10 +12,10 @@
 # Dependencies:
 #	- pjsip
 # 	- espeak
-# 
+#
 # References:
 # https://github.com/philipptrenz/cgcall
-# 
+#
 #================================================================================
 #This script is free software; you can redistribute it and/or
 #modify it under the terms of the GNU Lesser General Public
@@ -47,9 +47,9 @@ export PATH="${PATH:+$PATH:}/usr/sbin:/sbin:/home/pi/cgcall:"
 case "$1" in
   start)
     echo "Starting daemon: "$NAME1
-	start-stop-daemon --start --chdir $DIR --background --pidfile $PIDFILE1 --make-pidfile --exec $DAEMON1 -- $DAEMON_OPTS1
+	start-stop-daemon --start --chdir $DIR --user pi --make-pidfile --pidfile $PIDFILE1 --background --startas /bin/bash -- -c "exec $DAEMON1 $DAEMON_OPTS1 > /var/log/$NAME1.log 2>&1"
 	echo "Starting daemon: "$NAME2
-	start-stop-daemon --start --chdir $DIR --background --pidfile $PIDFILE2 --make-pidfile --exec $DAEMON2 -- $DAEMON_OPTS2
+	start-stop-daemon --start --chdir $DIR --user pi --make-pidfile --pidfile $PIDFILE2 --background --startas /bin/bash -- -c "exec $DAEMON2 $DAEMON_OPTS2 > /var/log/$NAME2.log 2>&1"
     echo "."
 	;;
   stop)
