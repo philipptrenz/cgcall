@@ -44,17 +44,15 @@ make
 
 ## Usage
 
-```cgcall [options]```
+```cgcall --config-file=/path/to/cgcall.cfg [-s 1]```
 
 ## Commandline
 
-### Mandatory options
-
 * --config-file=string   _Set config file_   
 
-### Optional options
+Optional:
 
-* -s=int       _Silent mode (hide info messages) (0/1)_   
+* -s=int       _Silent mode (0/1)_   
 
 ## Config file
 
@@ -75,21 +73,21 @@ make
 * dtmf.X.tts-answer=string    _Set tts answer._   
 * dtmf.X.cmd=string           _Set shell command._   
 
-### Optional options
+### Optional
 
 * rc=int      _Record call (0=no/1=yes)_   
 * af=string   _announcement wav file to play; tts will not be read, if this parameter is given. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz;_ 
 * cmd=string  _command to check if the call should be taken; the wildcard # will be replaced with the calling phone number; should return a "1" as first char, if you want to take the call._
 * am=string   _aftermath: command to be executed after call ends. Will be called with two parameters: $1 = Phone number $2 = recorded file name_
 
-Hint: Audio files can be converted via `ffmpeg -i input.wav -ac 1 -ar 22000 -acodec pcm_s16le output.wav`
+Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -acodec pcm_s16le output.wav`
 
 ## a sample configuration can be found in cgcall-sample.cfg
   
-## sipserv can be controlled with 
+## Start/Stop script
 
 ```bash
-./cgcall.sh start and 
+./cgcall.sh start
 ./cgcall.sh stop
 ```
 
