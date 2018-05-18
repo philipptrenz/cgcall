@@ -30,8 +30,6 @@ cd ~/
 git clone https://github.com/philipptrenz/cgcall.git
 cd cgcall
 make
-
-sudo pip3 install ftplib
 ```
 
 
