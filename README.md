@@ -1,17 +1,12 @@
 # cgcall – A SIP audio player for audio records
 
-This software provides a "softphone", a Voice over IP software client, to provide a audio player for WAV-files via telephony, running on a Raspberry Pi.
+This software provides a "softphone", a Voice over IP software client, to provide a audio player for WAV-files via telephony running on a Raspberry Pi.
 
 Dependencies:
 - PJSUA API (http://www.pjsip.org)
 - eSpeak (http://espeak.sourceforge.net)
 
-Forked from: https://github.com/fabianhu/SIP-Pi
-
-Copyright (C) 2012 by _Andre Wussow_, desk@binerry.de
-
-Major changes 2017 by _Fabian Huslik, github.com/fabianhu_
-
+Based on https://github.com/binerry/RaspberryPi/
 
 ## Installation on Raspberry Pi 3
 
@@ -98,4 +93,4 @@ sudo update-rc.d cgcall defaults
 
 ## Raspberry Pi case
 
-I designed a Rasperry Pi 2/3 case to be 3D printed, check it out at [Thingiverse](https://www.thingiverse.com/thing:2918026)
+I designed a Rasperry Pi 2/3 case to be 3D printed, check it out at [Thingiverse](https://www.thingiverse.com/thing:2918026).
