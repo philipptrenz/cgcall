@@ -75,19 +75,14 @@ Hint: Audio files can be converted via `ffmpeg -i inputfile -ac 1 -ar 22000 -aco
 
 **A sample configuration can be found in cgcall-sample.cfg**
   
-## Start/Stop script
-
-```bash
-sudo ./scripts/cgcall.sh start
-sudo ./scripts/cgcall.sh stop
-```
-
-## Start cgcall on boot
+## Activate cgcall service
 
 ```bash
 sudo cp scripts/cgcall.sh /etc/init.d/cgcall
 sudo update-rc.d cgcall defaults 
 ```
+
+Now cgcall gets started at boot and can be controlled via `sudo service cgcall [start|stop|status]`
 
 ## Raspberry Pi case
 
