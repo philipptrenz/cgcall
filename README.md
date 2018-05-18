@@ -6,7 +6,7 @@ Dependencies:
 - PJSUA API (http://www.pjsip.org)
 - eSpeak (http://espeak.sourceforge.net)
 
-Based on https://github.com/binerry/RaspberryPi/
+Based on https://github.com/binerry/RaspberryPi/, modified by and forked from https://github.com/fabianhu/SIP-Pi.
 
 ## Installation on Raspberry Pi 3
 
@@ -82,7 +82,7 @@ sudo cp scripts/cgcall.sh /etc/init.d/cgcall
 sudo update-rc.d cgcall defaults 
 ```
 
-Now cgcall gets started at boot and can be controlled via `sudo service cgcall [start|stop|status]`
+Now cgcall gets started at boot and can be controlled via `sudo service cgcall [start|stop|restart|status]`
 
 ## Raspberry Pi case
 
