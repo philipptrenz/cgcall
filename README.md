@@ -98,4 +98,4 @@ sudo update-rc.d cgcall defaults
 
 ## Raspberry Pi case
 
-I designed a Rasperry Pi case to be 3D printed, check it out at [Thingiverse](https://www.thingiverse.com/thing:2918026)
+I designed a Rasperry Pi 2/3 case to be 3D printed, check it out at [Thingiverse](https://www.thingiverse.com/thing:2918026)
