@@ -45,10 +45,7 @@ case "$1" in
   stop)
     stop
     ;;
-  uninstall)
-    uninstall
-    ;;
-  retart)
+  restart)
     stop
     start
     ;;
