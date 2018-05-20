@@ -4,7 +4,6 @@ This software provides a "softphone", a Voice over IP software client, to provid
 
 Dependencies:
 - PJSUA API (http://www.pjsip.org)
-- eSpeak (http://espeak.sourceforge.net)
 
 Based on https://github.com/binerry/RaspberryPi/, modified by and forked from https://github.com/fabianhu/SIP-Pi.
 
@@ -52,9 +51,7 @@ Optional:
 * sd=string   _Set sip provider domain._   
 * su=string   _Set sip username._   
 * sp=string   _Set sip password._   
-* ln=string   _Language identifier for espeak TTS (e.g. en = English or de = German)._
-
-* tts=string  _String to be read as a intro message_
+* af=string   _announcement wav file to play; tts will not be read, if this parameter is given. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz;_ 
 
 ### _and at least one dtmf configuration (X = dtmf-key index)_   
 
@@ -66,8 +63,6 @@ Optional:
 
 ### Optional
 
-* rc=int      _Record call (0=no/1=yes)_   
-* af=string   _announcement wav file to play; tts will not be read, if this parameter is given. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz;_ 
 * cmd=string  _command to check if the call should be taken; the wildcard # will be replaced with the calling phone number; should return a "1" as first char, if you want to take the call._
 * am=string   _aftermath: command to be executed after call ends. Will be called with two parameters: $1 = Phone number $2 = recorded file name_
 

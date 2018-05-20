@@ -10,3 +10,4 @@ audio/*.mp3
 .activecall
 cgcall.cfg
 log/
+cgcall.dSYM
