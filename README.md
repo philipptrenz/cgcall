@@ -34,15 +34,15 @@ make
 
 ## Usage
 
-```cgcall --config-file=/path/to/cgcall.cfg [-s 1]```
+```cgcall --config path/to/cgcall.cfg [-s 1]```
 
 ## Commandline
 
-* --config-file=string   _Set config file_   
+* --config string   _Set config file_   
 
 Optional:
 
-* -s=int       _Silent mode (0/1)_   
+* -s int       _Silent mode (0/1)_   
 
 ## Config file
 

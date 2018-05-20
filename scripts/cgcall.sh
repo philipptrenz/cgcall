@@ -14,7 +14,7 @@ CONFIG="$DIR/cgcall.cfg"
 NAME1=cgcall
 PIDFILE1=/var/run/$NAME1.pid
 DAEMON1=$DIR/cgcall
-DAEMON_OPTS1="--config-file $CONFIG"
+DAEMON_OPTS1="--config $CONFIG"
 
 NAME2=cgcall_py
 PIDFILE2=/var/run/$NAME2.pid
