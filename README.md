@@ -51,7 +51,7 @@ Optional:
 * sd=string   _Set sip provider domain._   
 * su=string   _Set sip username._   
 * sp=string   _Set sip password._   
-* af=string   _announcement wav file to play; tts will not be read, if this parameter is given. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz;_ 
+* af=string   _announcement wav file to play. File format is Microsoft WAV (signed 16 bit) Mono, 22 kHz_ 
 
 ### _and at least one dtmf configuration (X = dtmf-key index)_   
 
