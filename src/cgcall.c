@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 			}
 
 			// check for config file location
-			if (!strcasecmp(argv[arg], "--config") || !strcasecmp(argv[arg], "--config-file"))
+			if (!strcasecmp(argv[arg], "--config") || !strcasecmp(argv[arg], "-c") || !strcasecmp(argv[arg], "--config-file"))
 			{
 				if (argc >= (arg+1))
 				{
