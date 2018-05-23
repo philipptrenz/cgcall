@@ -126,6 +126,7 @@ static void get_timestamp(time_t*, char*);
 
 // check if announcement got played
 int announcement_played = 0;
+int latest_record_played = 0;
 
 // main application
 int main(int argc, char *argv[])
@@ -922,7 +923,11 @@ static void on_call_media_state(pjsua_call_id call_id)
 
 		// create and start media player
 		create_player(call_id, app_cfg.announcement_file);
-		announcement_played = 1;
+		if (announcement_played == 0)
+		{
+			announcement_played = 1;
+		}
+		
 	}
 }
 
@@ -1045,8 +1050,16 @@ static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
 	log_message("Media file finished.\n");
 	player_destroy(play_id);
 
-	if (announcement_played == 1) {
-		play_latest_record();
+	if (latest_record_played == 0) {
+		if (announcement_played == 1)
+		{
+			play_latest_record();
+		}
+		
+	} else 
+	{
+		player_destroy(play_id);
+		pjsua_call_hangup(current_call, 200, NULL, NULL);
 	}
 
 	pj_status_t status;
@@ -1057,6 +1070,8 @@ static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
 
 static void play_latest_record()
 {
+	
+	latest_record_played = 1;
 	pjsua_call_id call_id = current_call;
 
 	// destroy old player
