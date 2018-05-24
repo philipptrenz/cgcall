@@ -125,10 +125,6 @@ static void get_elapsed_time(time_t*, time_t*, char*);
 static void get_timestamp(time_t*, char*);
 
 
-// check if announcement got played
-int announcement_played = 0;
-int latest_record_played = 0;
-
 // main application
 int main(int argc, char *argv[])
 {
@@ -1037,6 +1033,7 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 	*/
 }
 
+static int count = 0;
 
 // handler for media-finished-events
 static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
@@ -1047,11 +1044,12 @@ static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
 	log_message("Media file finished.\n");
 	player_destroy(play_id);
 
-	if (announcement_played == 1 && latest_record_played == 0) {
-			play_latest_record();
+	if (count == 0) {
+		count++;
+		play_latest_record();
 		
 	} 
-	else if (announcement_played == 1 && latest_record_played == 1)
+	else if (count == 1)
 	{
 		player_destroy(play_id);
 		pjsua_call_hangup(current_call, 200, NULL, NULL);
@@ -1070,7 +1068,6 @@ static void play_announcement()
 	player_destroy(play_id);
 
 	create_player(call_id, app_cfg.announcement_file);
-	announcement_played = 1;
 }
 
 static void play_latest_record()
@@ -1099,7 +1096,6 @@ static void play_latest_record()
 	{
 		fclose(file);
 		create_player(call_id, "audio/latest.wav");		
-		latest_record_played = 1;
 	}
 }
 
