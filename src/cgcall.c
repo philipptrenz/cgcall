@@ -118,6 +118,7 @@ static void app_exit();
 static void error_exit(const char *, pj_status_t);
 
 // header of internal functions
+static void play_announcement();
 static void play_latest_record();
 static void log_caller(pjsua_call_info);
 static void get_elapsed_time(time_t*, time_t*, char*);
@@ -922,11 +923,7 @@ static void on_call_media_state(pjsua_call_id call_id)
 		log_message("Call media activated.\n");
 
 		// create and start media player
-		create_player(call_id, app_cfg.announcement_file);
-		if (announcement_played == 0)
-		{
-			announcement_played = 1;
-		}
+		play_announcement();
 		
 	}
 }
@@ -1068,10 +1065,18 @@ static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
 
 // ---------------------------
 
+static void play_announcement()
+{
+	pjsua_call_id call_id = current_call;
+
+	player_destroy(play_id);
+
+	create_player(call_id, app_cfg.announcement_file);
+	announcement_played = 1;
+}
+
 static void play_latest_record()
 {
-	
-	latest_record_played = 1;
 	pjsua_call_id call_id = current_call;
 
 	// destroy old player
@@ -1096,6 +1101,7 @@ static void play_latest_record()
 	{
 		fclose(file);
 		create_player(call_id, "audio/latest.wav");
+		latest_record_played = 1;
 	}
 }
 
