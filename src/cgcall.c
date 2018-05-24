@@ -93,6 +93,8 @@ pjsua_call_id current_call = PJSUA_INVALID_ID;
 //char *tts_answer_file = "ans.wav";
 char lastNumber[100] = "000"; // will be overwritten!
 
+int count = 0;
+
 // header of helper-methods
 static void create_player(pjsua_call_id, char *);
 static void log_message(char *);
@@ -939,6 +941,8 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 	{
 		log_message("Call confirmed.\n");
 
+		count = 0;
+
 		// set call_start_time
 		time(&call_start_time);  /* get current time; same as: now = time(NULL)  */
 
@@ -1032,8 +1036,6 @@ static void on_dtmf_digit(pjsua_call_id call_id, int digit)
 	}
 	*/
 }
-
-static int count = 0;
 
 // handler for media-finished-events
 static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
