@@ -1047,13 +1047,11 @@ static pj_status_t on_media_finished(pjmedia_port *play_port, void *user_data)
 	log_message("Media file finished.\n");
 	player_destroy(play_id);
 
-	if (latest_record_played == 0) {
-		if (announcement_played == 1)
-		{
+	if (announcement_played == 1 && latest_record_played == 0) {
 			play_latest_record();
-		}
 		
-	} else 
+	} 
+	else if (announcement_played == 1 && latest_record_played == 1)
 	{
 		player_destroy(play_id);
 		pjsua_call_hangup(current_call, 200, NULL, NULL);
@@ -1100,7 +1098,7 @@ static void play_latest_record()
 	else
 	{
 		fclose(file);
-		create_player(call_id, "audio/latest.wav");
+		create_player(call_id, "audio/latest.wav");		
 		latest_record_played = 1;
 	}
 }

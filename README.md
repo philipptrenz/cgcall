@@ -13,11 +13,11 @@ Based on https://github.com/binerry/RaspberryPi/, modified by and forked from ht
 # Install dependencies
 sudo apt install autoconf checkinstall libgpac-dev libmp3lame-dev libopencore-amrnb-dev \
 libopencore-amrwb-dev libtheora-dev libvorbis-dev yasm zlib1g-dev libsdl-sound1.2-dev \
-libportaudio-dev espeak espeak-data git python3 ffmpeg
+libportaudio-dev git python3 ffmpeg
 
 # Install pjsip
 wget http://www.pjsip.org/release/2.7.2/pjproject-2.7.2.tar.bz2
-tar xvfj pjproject-2.7.2.tar.bz2
+tar xvfj pjproject-2.7.2.tar.bz2 && rm pjproject-2.7.2.tar.bz2
 cd pjproject-2.7.2/
 ./configure --disable-video --disable-libwebrtc
 make dep && make clean && make
