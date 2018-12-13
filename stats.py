@@ -4,7 +4,7 @@ import re
 import glob
 import numpy as np
 from datetime import datetime
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
 def get_ignore_from_argv():
     args = sys.argv[1:] # first argument is this file
@@ -15,20 +15,24 @@ def get_ignore_from_argv():
 def get_months(logfiles_list):
     m = []
     for f in logfiles_list:
-        s = f.strip('_log.txt')
-        m.append(s[4:]+'-'+s[:4])
+        s = f.strip('_log.txt').strip('log/')
+        m.append(s[4:]+'-'+s[0:4])
     return m
 
 ################################################################################
 
-log_files_per_month = sorted(glob.glob('logs/*_log.txt'))
+log_files_per_month = sorted(glob.glob('log/*_log.txt'))
+if len(log_files_per_month) < 1:
+    print('no log files')
+    exit(1)
+
 months = get_months(log_files_per_month)
 
-print('###################################################')
-print('##                                               ##')
-print('##      cgcall logs from', months[0], 'to', months[-1],'     ##')
-print('##                                               ##')
-print('###################################################\n')
+print('#################################################################')
+print('##                                                             ##')
+print('##             cgcall logs from', months[0], 'to', months[-1],'            ##')
+print('##                                                             ##')
+print('#################################################################\n')
 
 ignore_phonenumbers = get_ignore_from_argv()
 
@@ -47,11 +51,16 @@ for f in log_files_per_month:
             date, phone, duration = line.strip().split('\t')
 
             # ignore calls from command line params
-            for pattern in ignore_phonenumbers:
-                regex = re.compile(pattern)
-                if regex.match(phone):
-                    #print('MATCH:', phone)
-                    continue
+            skip = False
+            if ignore_phonenumbers:
+                for pattern in ignore_phonenumbers:
+                    if pattern:
+                        regex = re.compile(pattern)
+                        if regex.match(phone):
+                            #print('MATCH:', phone)
+                            skip = True
+                            break
+            if skip: continue
 
             d = datetime.strptime(date, '%Y-%m-%d_%H:%M:%S')
             min, sec = duration.split(':')
@@ -83,4 +92,3 @@ for i in range(len(log_files_per_month)):
 print('|---------------------------------------------------------------|')
 #print('|', ' total ', '|', 15, '|', len(set(np_calls_phonenumber.flatten())), '|')
 #print('|-----------------------------------------------------------------------|')
-
