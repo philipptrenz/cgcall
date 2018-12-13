@@ -7,7 +7,7 @@ Dependencies:
 
 Based on https://github.com/binerry/RaspberryPi/, modified by and forked from https://github.com/fabianhu/SIP-Pi.
 
-## Installation on Raspberry Pi 3
+## Installation on Raspberry Pi 3 with Raspbian Stretch Lite
 
 ```bash
 # Install dependencies
